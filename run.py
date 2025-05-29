@@ -73,7 +73,20 @@ def update_worksheet(worksheet, data):
     worksheet_instance = SHEET.worksheet(worksheet)
     worksheet_instance.append_row(data)
     print(f"{worksheet} worksheet updated successfully.\n")    
+
+def get_last_5_entries_sales():
+    """
+    Collects the last 5 entries from the sales worksheet.
+    Returns a list of lists containing the last 5 entries.
+    """
+    sales = SHEET.worksheet("sales")
+    columns = []
+    for ind in range(1, 7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
     
+    return columns
+
 # This runs the main functions of the program.
 def main():
     """
