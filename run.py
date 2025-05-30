@@ -101,6 +101,23 @@ def calculate_stock_data(data):
     
     return new_stock_data
     
+def get_stock_values(stock_data):
+    """
+    Combine stock headings with latest stock data.
+    Returns a dictionary mapping item names to quantities.
+    """
+    worksheet = SHEET.worksheet("stock")
+    
+    # Get header row (item names)
+    headings = worksheet.row_values(1)
+    
+    # Use the latest stock_data passed in
+    values = [str(val) for val in stock_data]
+
+    # Zip into dictionary
+    stock_dict = {heading: int(value) for heading, value in zip(headings, values)}
+
+    return stock_dict
 
 # This runs the main functions of the program.
 def main():
@@ -117,8 +134,9 @@ def main():
     stock_data = calculate_stock_data(sales_columns)
     print("Stock data calculated successfully.\n")
     update_worksheet("stock", stock_data)
+    stock_values = get_stock_values(stock_data)
+    print("Make the following number of sandwiches for next market:\n")
+    print(stock_values)
 
 print("Welcome to Love Sandwiches Data Automation\n")
 main()
-# This code is designed to run in a Google Colab environment or similar setup
-
